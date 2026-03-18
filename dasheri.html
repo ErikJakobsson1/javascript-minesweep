@@ -1,3 +1,31 @@
-huh
-dasdasdasasdsaddssdsdsdsdsd
-tryckastoragössar
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Minesweeper</h1>
+        
+        <div class="game-controls">
+            <div class="difficulty-selector">
+                <button onclick="startNewGame(9, 9, 10)" class="difficulty-btn">9x9 (10 minor)</button>
+                <button onclick="startNewGame(16, 16, 40)" class="difficulty-btn">16x16 (40 minor)</button>
+                <button onclick="startNewGame(16, 32, 99)" class="difficulty-btn">16x32 (99 minor)</button>
+            </div>
+            
+            <div class="game-info">
+                <div class="score-counter">Flaggor: <span id="flagCount">0</span></div>
+                <button onclick="resetGame()" class="restart-btn">Starta om</button>
+            </div>
+        </div>
+        
+        <div id="gameBoard" class="game-board"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
