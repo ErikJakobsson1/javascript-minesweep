@@ -2,4 +2,4 @@ function setupgame(){
 
 }
 
-console.log(carl);
+console.log("carl");
