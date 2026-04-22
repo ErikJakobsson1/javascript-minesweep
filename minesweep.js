@@ -22,3 +22,28 @@ for (let y = 0; y < height; y++) {
   }
   board.push(row);
 }
+
+
+Nisse:
+
+
+function handleLeftClick(event) {
+
+    // den rutan du clickade på gashpa
+    let clickedCell = event.target;
+
+    // Hämtar x och y från HTML
+    let x = Number(clickedCell.dataset.x);
+    let y = Number(clickedCell.dataset.y);
+
+    // Hämta motsvarande ruta i vår spel-array
+    let cell = board[y][x];
+
+    // när rutan redan clickats öppen låt den vara öpen
+    if (cell.revealed === true) {
+        return;
+    }
+
+    // öppnar den klickade rutnan utan redan öppen
+    revealCell(x, y);
+}
