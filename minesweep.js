@@ -23,8 +23,27 @@ for (let y = 0; y < height; y++) {
   board.push(row);
 }
 
+const mineCount = 15;
+let placedMines = 0;
 
-Nisse:
+while (placedMines < mineCount) {
+  let x = Math.floor(Math.random() * width);
+  let y = Math.floor(Math.random() * height);
+
+  // kolla så det inte redan är en mina där
+  if (!board[y][x].isMine) {
+    board[y][x].isMine = true;
+    placedMines++;
+  }
+}
+
+
+
+
+
+
+
+//Nisse:
 
 
 function handleLeftClick(event) {
