@@ -24,7 +24,7 @@ for (let y = 0; y < height; y++) {
 }
 
 
-Nisse:
+//Nisse:
 
 
 function handleLeftClick(event) {
@@ -46,4 +46,43 @@ function handleLeftClick(event) {
 
     // öppnar den klickade rutnan utan redan öppen
     revealCell(x, y);
+}
+function revealCell(x, y) {
+    const cell = board[y][x];
+
+    if (cell.revealed) return;
+
+    cell.revealed = true;
+    cell.element.classList.add("revealed");
+
+    // 💣 om man clickar på minan så slutar spelet och man får börja om
+    if (cell.mine) {
+        cell.element.classList.add("mine");
+        alert("Game Over!");
+        revealAllMines();
+        return;
+    }
+
+    // 🔢 räknar ut minor runt
+    let count = countMines(x, y);
+
+    if (count > 0) {
+        cell.element.textContent = count;
+        cell.element.dataset.value = count;
+    } else {
+        // 🔄 Flood fill rutor runt utan bomb närlliggande öppnas automatiskt
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+                let nx = x + dx;
+                let ny = y + dy;
+
+                if (
+                    nx >= 0 && nx < cols &&
+                    ny >= 0 && ny < rows
+                ) {
+                    revealCell(nx, ny);
+                }
+            }
+        }
+    }
 }
