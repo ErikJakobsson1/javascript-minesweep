@@ -30,7 +30,6 @@ while (placedMines < mineCount) {
   let x = Math.floor(Math.random() * width);
   let y = Math.floor(Math.random() * height);
 
-  // kolla så det inte redan är en mina där
   if (!board[y][x].isMine) {
     board[y][x].isMine = true;
     placedMines++;
