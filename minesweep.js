@@ -1,5 +1,9 @@
 function setupgame(){
+  gameElement = document.getElementById(gameBoard)
+  gameElement.style.gridTemplateColumns = `repeat(${9},32px)`;
 
+
+  
 }
 
 //person 1 (carl)
@@ -13,6 +17,8 @@ for (let y = 0; y < height; y++) {
   for (let x = 0; x < width; x++) {
     row.push({
       isMine: false,
+      revealed: false,
+      flagged: false,
     });
   }
   board.push(row);
@@ -113,7 +119,7 @@ function revealCell(x, y) {
     cell.element.classList.add("revealed");
 
     // Om det är en mina → stoppa
-    if (cell.mine === true) {
+    if (cell.ismine === true) {
         cell.element.classList.add("mine");
         return;
     }
@@ -147,3 +153,24 @@ function revealCell(x, y) {
     }
 }
 
+
+
+function countMines(x, y){
+  let numberofmines = 0;
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+
+        let nx = x + dx;
+        let ny = y + dy;
+
+        // Kolla så vi inte går utanför
+        if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+          if (board[ny][nx].isMine) {
+            numberofmines ++
+          }
+            
+        }
+    }
+  }
+  return numberofmines;
+}
