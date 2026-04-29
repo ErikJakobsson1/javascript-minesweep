@@ -1,62 +1,63 @@
 function setupgame(){
   gameElement = document.getElementById(gameBoard)
   gameElement.style.gridTemplateColumns = `repeat(${9},32px)`;
+    //person 1 (carl)
+    const width = 10;
+  const height = 10;
+
+  let board = [];
+
+  for (let y = 0; y < height; y++) {
+    let row = [];
+    for (let x = 0; x < width; x++) {
+      row.push({
+        isMine: false,
+        revealed: false,
+        flagged: false,
+        element: null
+      });
+
+    }
+    board.push(row);
+  }
+  // create HTML cells
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      let cell = document.createElement("div");
+      cell.classList.add("container");
+        ////Nisse:
+      // När man vänsterklickar → kör funktionen handleLeftClick
+      cell.addEventListener("click", handleLeftClick(y, x));
+      // När man högerklickar → kör funktionen handleRightClick
+      cell.addEventListener("contextmenu", handleRightClick(y, x));
+      gameElement.appendChild(cell);
+      board[y][x].element = cell;
+    }
+  }
+
+  const mineCount = 15;
+  let placedMines = 0;
+
+  while (placedMines < mineCount) {
+    let x = Math.floor(Math.random() * width);
+    let y = Math.floor(Math.random() * height);
+
+    if (!board[y][x].isMine) {
+      board[y][x].isMine = true;
+      placedMines++;
+    }
+  }
+
 
 
   
+
 }
 
-//person 1 (carl)
-  const width = 10;
-const height = 10;
-
-let board = [];
-
-for (let y = 0; y < height; y++) {
-  let row = [];
-  for (let x = 0; x < width; x++) {
-    row.push({
-      isMine: false,
-      revealed: false,
-      flagged: false,
-    });
-  }
-  board.push(row);
-}
-
-const mineCount = 15;
-let placedMines = 0;
-
-while (placedMines < mineCount) {
-  let x = Math.floor(Math.random() * width);
-  let y = Math.floor(Math.random() * height);
-
-  if (!board[y][x].isMine) {
-    board[y][x].isMine = true;
-    placedMines++;
-  }
-}
-
-
-
-
-
-
-
-////Nisse:
-// När man vänsterklickar → kör funktionen handleLeftClick
-cell.addEventListener("click", handleLeftClick);
-
-// När man högerklickar → kör funktionen handleRightClick
-cell.addEventListener("contextmenu", handleRightClick);
-
-// Spara position i HTML så vi vet vilken ruta som klickas
-cell.dataset.x = x;
-cell.dataset.y = y;
 
 
 // Funktion som körs när man vänsterklickar
-function handleLeftClick(event) {
+function handleLeftClick(y, x) {
 
     // Hämta rutan som klickades
     let clickedCell = event.target;
@@ -79,7 +80,7 @@ function handleLeftClick(event) {
 }
 
 // Funktion som körs vid högerklick
-function handleRightClick(event) {
+function handleRightClick(y, x) {
 
     // Stoppar webbläsarens meny
     event.preventDefault();
