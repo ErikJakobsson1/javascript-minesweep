@@ -132,7 +132,7 @@ function revealCell(x, y) {
         cell.element.textContent = count;
     } 
     
-    // Om inga minor → öppna alla grannar (FLOOD FILL)
+    // Om inga minor öppna alla grannar (FLOOD FILL)
     else {
 
         // Loopar igenom alla rutor runt
