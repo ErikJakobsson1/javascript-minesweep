@@ -26,9 +26,9 @@ function setupgame(){
       let cell = document.createElement("div");
       cell.classList.add("container");
         ////Nisse:
-      // När man vänsterklickar → kör funktionen handleLeftClick
+      // När man vänsterklickar kör funktionen handleLeftClick
       cell.addEventListener("click", handleLeftClick(y, x));
-      // När man högerklickar → kör funktionen handleRightClick
+      // När man högerklickar kör funktionen handleRightClick
       cell.addEventListener("contextmenu", handleRightClick(y, x));
       gameElement.appendChild(cell);
       board[y][x].element = cell;
@@ -69,10 +69,10 @@ function handleLeftClick(y, x) {
     // Hämta motsvarande ruta i arrayen
     let cell = board[y][x];
 
-    // Om redan öppnad → gör inget
+    // Om redan öppnad gör inget
     if (cell.revealed === true) return;
 
-    // Om den har flagga → gör inget
+    // Om den har flagga gör inget
     if (cell.flagged === true) return;
 
     // Öppna rutan
@@ -92,15 +92,15 @@ function handleRightClick(y, x) {
 
     let cell = board[y][x];
 
-    // Om rutan redan är öppnad → gör inget
+    // Om rutan redan är öppnad  gör inget
     if (cell.revealed === true) return;
 
-    // Om flagga finns → ta bort
+    // Om flagga finns ta bort
     if (cell.flagged === true) {
         cell.flagged = false;
         clickedCell.classList.remove("flag");
     } 
-    // Annars → sätt flagga
+    // Annars sätt flagga
     else {
         cell.flagged = true;
         clickedCell.classList.add("flag");
@@ -112,7 +112,7 @@ function revealCell(x, y) {
 
     let cell = board[y][x];
 
-    // Om redan öppnad → gör inget
+    // Om redan öppnad gör inget
     if (cell.revealed === true) return;
 
     // Markera som öppnad
