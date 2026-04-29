@@ -2,11 +2,6 @@ function setupgame(){
 
 }
 
-console.log("carl");
-
-for (let i = 0; i < 100; i++) {
-    console.log("Carl Åhs, Hovlandaexpress@gmail.com");
-  }
 //person 1 (carl)
   const width = 10;
 const height = 10;
@@ -43,64 +38,112 @@ while (placedMines < mineCount) {
 
 
 ////Nisse:
+// När man vänsterklickar → kör funktionen handleLeftClick
+cell.addEventListener("click", handleLeftClick);
+
+// När man högerklickar → kör funktionen handleRightClick
+cell.addEventListener("contextmenu", handleRightClick);
+
+// Spara position i HTML så vi vet vilken ruta som klickas
+cell.dataset.x = x;
+cell.dataset.y = y;
 
 
+// Funktion som körs när man vänsterklickar
 function handleLeftClick(event) {
 
-    // den rutan du clickade på gashpa
+    // Hämta rutan som klickades
     let clickedCell = event.target;
 
-    // Hämtar x och y från HTML
+    // Hämta position (x och y)
     let x = Number(clickedCell.dataset.x);
     let y = Number(clickedCell.dataset.y);
 
-    // Hämta motsvarande ruta i vår spel-array
+    // Hämta motsvarande ruta i arrayen
     let cell = board[y][x];
 
-    // när rutan redan clickats öppen låt den vara öpen
-    if (cell.revealed === true) {
-        return;
-    }
+    // Om redan öppnad → gör inget
+    if (cell.revealed === true) return;
 
-    // öppnar den klickade rutnan utan redan öppen
+    // Om den har flagga → gör inget
+    if (cell.flagged === true) return;
+
+    // Öppna rutan
     revealCell(x, y);
 }
+
+// Funktion som körs vid högerklick
+function handleRightClick(event) {
+
+    // Stoppar webbläsarens meny
+    event.preventDefault();
+
+    let clickedCell = event.target;
+
+    let x = Number(clickedCell.dataset.x);
+    let y = Number(clickedCell.dataset.y);
+
+    let cell = board[y][x];
+
+    // Om rutan redan är öppnad → gör inget
+    if (cell.revealed === true) return;
+
+    // Om flagga finns → ta bort
+    if (cell.flagged === true) {
+        cell.flagged = false;
+        clickedCell.classList.remove("flag");
+    } 
+    // Annars → sätt flagga
+    else {
+        cell.flagged = true;
+        clickedCell.classList.add("flag");
+    }
+}
+
+// Funktion som öppnar en ruta
 function revealCell(x, y) {
-    const cell = board[y][x];
 
-    if (cell.revealed) return;
+    let cell = board[y][x];
 
+    // Om redan öppnad → gör inget
+    if (cell.revealed === true) return;
+
+    // Markera som öppnad
     cell.revealed = true;
     cell.element.classList.add("revealed");
 
-    // 💣 om man clickar på minan så slutar spelet och man får börja om
-    if (cell.mine) {
+    // Om det är en mina → stoppa
+    if (cell.mine === true) {
         cell.element.classList.add("mine");
-        alert("Game Over!");
-        revealAllMines();
         return;
     }
 
-    // 🔢 räknar ut minor runt
+    // Räkna minor runt (du måste ha denna funktion)
     let count = countMines(x, y);
 
+    // Om det finns minor → visa nummer
     if (count > 0) {
         cell.element.textContent = count;
-        cell.element.dataset.value = count;
-    } else {
-        // 🔄 Flood fill rutor runt utan bomb närlliggande öppnas automatiskt
+    } 
+    
+    // Om inga minor → öppna alla grannar (FLOOD FILL)
+    else {
+
+        // Loopar igenom alla rutor runt
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
+
                 let nx = x + dx;
                 let ny = y + dy;
 
-                if (
-                    nx >= 0 && nx < cols &&
-                    ny >= 0 && ny < rows
-                ) {
+                // Kolla så vi inte går utanför
+                if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+
+                    // Öppna nästa ruta (rekursion)
                     revealCell(nx, ny);
                 }
             }
         }
     }
 }
+
