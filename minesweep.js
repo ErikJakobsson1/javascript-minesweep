@@ -1,12 +1,13 @@
 function setupgame(){
-  gameElement = document.getElementById(gameBoard)
+  gameElement = document.getElementById("gameBoard")
   gameElement.style.gridTemplateColumns = `repeat(${9},32px)`;
     //person 1 (carl)
     const width = 10;
   const height = 10;
  
   let board = [];
- 
+ let rows = 10;
+let cols = 10;
  
   for (let y = 0; y < height; y++) {
     let row = [];
@@ -26,16 +27,22 @@ function setupgame(){
     for (let x = 0; x < width; x++) {
       let cell = document.createElement("div");
       cell.classList.add("container");
+
+
+  // Göra så spelet fungerar
+
         ////Nisse:
       // När man vänsterklickar kör funktionen handleLeftClick
-      cell.addEventListener("click", handleLeftClick(y, x));
+      cell.addEventListener("click", (event) => handleLeftClick(event, y, x));
       // När man högerklickar kör funktionen handleRightClick
-      cell.addEventListener("contextmenu", handleRightClick(y, x));
+     cell.addEventListener("contextmenu", (event) => handleRightClick(event, y, x));
       gameElement.appendChild(cell);
       board[y][x].element = cell;
     }
   }
  
+
+
   const mineCount = 15;
   let placedMines = 0;
  
@@ -66,7 +73,7 @@ function handleLeftClick(y, x) {
     // Hämta position (x och y)
     let x = Number(clickedCell.dataset.x);
     let y = Number(clickedCell.dataset.y);
- 
+   cell.classList.add("cell");
     // Hämta motsvarande ruta i arrayen
     let cell = board[y][x];
  
@@ -121,7 +128,7 @@ function revealCell(x, y) {
     cell.element.classList.add("revealed");
  
     // Om det är en mina → stoppa
-    if (cell.ismine === true) {
+    if (cell.isMine === true) {
         cell.element.classList.add("mine");
         return;
     }
