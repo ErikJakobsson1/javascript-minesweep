@@ -18,6 +18,37 @@ for (let y = 0; y < height; y++) {
   board.push(row);
 }
 
+}
+
+<<<<<<< HEAD
+//person 1 (carl)
+  const width = 10;
+const height = 10;
+=======
+  
+  for (let y = 0; y < height; y++) {
+    let row = [];
+    for (let x = 0; x < width; x++) {
+      row.push({
+        isMine: false,
+        revealed: false,
+        flagged: false,
+        element: null
+      });
+>>>>>>> c396550fa2cc3b02b7e9776751639301abf3c6dc
+
+let board = [];
+
+for (let y = 0; y < height; y++) {
+  let row = [];
+  for (let x = 0; x < width; x++) {
+    row.push({
+      isMine: false,
+    });
+  }
+  board.push(row);
+}
+
 const mineCount = 15;
 let placedMines = 0;
 
@@ -25,11 +56,18 @@ while (placedMines < mineCount) {
   let x = Math.floor(Math.random() * width);
   let y = Math.floor(Math.random() * height);
 
+
   if (!board[y][x].isMine) {
     board[y][x].isMine = true;
     placedMines++;
   }
 }
+  if (!board[y][x].isMine) {
+    board[y][x].isMine = true;
+    placedMines++;
+  }
+}
+
 
 
 
@@ -51,7 +89,22 @@ cell.dataset.x = x;
 cell.dataset.y = y;
 
 
+
+
+////Nisse:
+// När man vänsterklickar → kör funktionen handleLeftClick
+cell.addEventListener("click", handleLeftClick);
+
+// När man högerklickar → kör funktionen handleRightClick
+cell.addEventListener("contextmenu", handleRightClick);
+
+// Spara position i HTML så vi vet vilken ruta som klickas
+cell.dataset.x = x;
+cell.dataset.y = y;
+
+
 // Funktion som körs när man vänsterklickar
+function handleLeftClick(event) {
 function handleLeftClick(event) {
 
     // Hämta rutan som klickades
@@ -65,8 +118,10 @@ function handleLeftClick(event) {
     let cell = board[y][x];
 
     // Om redan öppnad → gör inget
+    // Om redan öppnad → gör inget
     if (cell.revealed === true) return;
 
+    // Om den har flagga → gör inget
     // Om den har flagga → gör inget
     if (cell.flagged === true) return;
 
@@ -75,6 +130,7 @@ function handleLeftClick(event) {
 }
 
 // Funktion som körs vid högerklick
+function handleRightClick(event) {
 function handleRightClick(event) {
 
     // Stoppar webbläsarens meny
@@ -88,13 +144,16 @@ function handleRightClick(event) {
     let cell = board[y][x];
 
     // Om rutan redan är öppnad → gör inget
+    // Om rutan redan är öppnad → gör inget
     if (cell.revealed === true) return;
 
+    // Om flagga finns → ta bort
     // Om flagga finns → ta bort
     if (cell.flagged === true) {
         cell.flagged = false;
         clickedCell.classList.remove("flag");
     } 
+    // Annars → sätt flagga
     // Annars → sätt flagga
     else {
         cell.flagged = true;
@@ -108,6 +167,7 @@ function revealCell(x, y) {
     let cell = board[y][x];
 
     // Om redan öppnad → gör inget
+    // Om redan öppnad → gör inget
     if (cell.revealed === true) return;
 
     // Markera som öppnad
@@ -115,6 +175,7 @@ function revealCell(x, y) {
     cell.element.classList.add("revealed");
 
     // Om det är en mina → stoppa
+    if (cell.mine === true) {
     if (cell.mine === true) {
         cell.element.classList.add("mine");
         return;
@@ -128,6 +189,7 @@ function revealCell(x, y) {
         cell.element.textContent = count;
     } 
     
+    // Om inga minor → öppna alla grannar (FLOOD FILL)
     // Om inga minor → öppna alla grannar (FLOOD FILL)
     else {
 
