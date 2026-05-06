@@ -2,9 +2,22 @@ function setupgame(){
 
 }
 
+<<<<<<< HEAD
 //person 1 (carl)
   const width = 10;
 const height = 10;
+=======
+  
+  for (let y = 0; y < height; y++) {
+    let row = [];
+    for (let x = 0; x < width; x++) {
+      row.push({
+        isMine: false,
+        revealed: false,
+        flagged: false,
+        element: null
+      });
+>>>>>>> c396550fa2cc3b02b7e9776751639301abf3c6dc
 
 let board = [];
 
