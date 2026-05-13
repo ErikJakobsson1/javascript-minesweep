@@ -2,11 +2,13 @@ let board = [];
 let rows = 10;
 let cols = 10;
 let mineCount = 15;
+let Numberofrevealed = 0;
 
 // Startar spelet
 function startNewGame(r, c, mines) {
   rows = r;
   cols = c;
+  Numberofrevealed = 0;
   mineCount = mines;
   setupgame();
 }
@@ -112,7 +114,10 @@ function revealCell(x, y) {
 
     if (cell.isMine) {
         cell.element.classList.add("mine");
-        return;
+
+        alert("Du förlorade asså!💣")
+
+       return;
     }
 
     let count = countMines(x, y);
@@ -134,7 +139,11 @@ function revealCell(x, y) {
             }
         }
     }
-}
+    Numberofrevealed ++
+    if (Numberofrevealed == rows * cols - mineCount) {
+      alert("you win")
+    }
+  }
 
 
 // räknar minor
@@ -157,3 +166,5 @@ function countMines(x, y){
 
   return numberofmines;
 }
+
+
