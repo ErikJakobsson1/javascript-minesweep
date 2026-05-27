@@ -1,3 +1,4 @@
+//Carls del
 let board = [];
 let rows = 10;
 let cols = 10;
@@ -56,7 +57,7 @@ function setupgame(){
       board[y][x].element = cell;
     }
   }
-
+//Nils del
   let placedMines = 0;
 
   while (placedMines < mineCount) {
@@ -108,10 +109,9 @@ function revealCell(x, y) {
     let cell = board[y][x];
 
     if (cell.revealed) return;
-
     cell.revealed = true;
     cell.element.classList.add("revealed");
-
+//eriks dell
     if (cell.isMine) {
         cell.element.classList.add("mine");
 
